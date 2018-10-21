@@ -30,7 +30,7 @@ var fetchGenres = (callback) => {
 
 var searchByGenre = (genre, callback) => {
 
-	var encodedUri = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
+	var encodedUri = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
 	
 	let options = {
 		url: encodedUri,

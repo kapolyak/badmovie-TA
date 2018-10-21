@@ -3,6 +3,10 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var { fetchGenres } = require('./helpers/apiHelpers.js');
 var { searchByGenre } = require('./helpers/apiHelpers.js');
+var { saveToDb } = require('./../db/sql/index.js');
+var { fetchFavorites } = require('./../db/sql/index.js');
+var { deleteFavorite } = require('./../db/sql/index.js');
+
 
 var app = express();
 
@@ -21,38 +25,44 @@ app.post('/search', function(req, res) {
 
   searchByGenre(genre, (body) => {
     var result = JSON.parse(body);
-    console.log('from api:', result);
     res.send(result);
   })
-
-
-  // get the search genre     
-
-  // https://www.themoviedb.org/account/signup
-
-  // use this endpoint to search for movies by genres, you will need an API key
-
-  // https://api.themoviedb.org/3/discover/movie
-
-  // and sort them by horrible votes using the search parameters in the API
-
-
 });
 
 app.get('/genres', function(req, res) {
   console.log('GET /genres request recieved');
-
   fetchGenres((body) => {
     res.send(body);
   })
-  
 });
 
+app.get('/favorites', (req, res) => {
+  console.log('GET /favorites request recieved');
+
+  fetchFavorites((body) => {
+    console.log('from db we got: ', body)
+    res.send(body);
+  })
+
+})
+
 app.post('/save', function(req, res) {
+  console.log('POST /save request recieved');
+  var movie = req.body.movie;
+
+  saveToDb(movie, (result) => {
+    console.log(result);
+  });
 
 });
 
 app.post('/delete', function(req, res) {
+  console.log('POST /delete request recieved');
+  var movie = req.body.movie;
+  deleteFavorite(movie, (result) => {
+    console.log(result);
+    res.send();
+  })
 
 });
 
