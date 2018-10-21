@@ -10,3 +10,9 @@ const { API_KEY } = require('../../config.js');
 // Get your API Key and save it in your config file
 
 // Don't forget to export your functions and require them within your server file
+
+var fetchGenres = () => {
+
+    https://api.themoviedb.org/3/genre/movie/list
+
+}

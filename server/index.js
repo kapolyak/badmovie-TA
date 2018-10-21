@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request')
+
 var app = express();
 
 //Helpers
@@ -27,7 +28,7 @@ app.get('/search', function(req, res) {
 });
 
 app.get('/genres', function(req, res) {
-  // make an axios request to get the list of official genres
+  
   
   // use this endpoint, which will also require your API key: https://api.themoviedb.org/3/genre/movie/list
 
@@ -42,12 +43,12 @@ app.post('/delete', function(req, res) {
 
 });
 
-//OPTION 2: Use Express Router
-//IF you decide to go with this option delete OPTION 1 to continue
-//Routes
-const movieRoutes = require('./routes/movieRoutes.js');
-//Use routes
-app.use('/movies', movieRoutes);
+// //OPTION 2: Use Express Router
+// //IF you decide to go with this option delete OPTION 1 to continue
+// //Routes
+// const movieRoutes = require('./routes/movieRoutes.js');
+// //Use routes
+// app.use('/movies', movieRoutes);
 
 
 app.listen(3000, function() {
