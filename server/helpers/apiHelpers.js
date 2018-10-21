@@ -11,8 +11,21 @@ const { API_KEY } = require('../../config.js');
 
 // Don't forget to export your functions and require them within your server file
 
-var fetchGenres = () => {
+var fetchGenres = (callback) => {
 
-    https://api.themoviedb.org/3/genre/movie/list
+	var encodedUri = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+
+	let options = {
+		url: encodedUri,
+		method: 'GET'
+	};
+
+	request(options, (err, res, body) => {
+		if (err) console.log(err);
+		console.log('statusCode:', res && res.statusCode);
+		callback(body);
+	})
 
 }
+
+module.exports.fetchGenres = fetchGenres;

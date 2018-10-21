@@ -1,11 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request')
+var { fetchGenres } = require('./helpers/apiHelpers.js')
 
 var app = express();
-
-//Helpers
-var apiHelpers = require('./helpers/apiHelpers.js');
 
 //Middleware
 app.use(bodyParser.json());
@@ -28,11 +26,13 @@ app.get('/search', function(req, res) {
 });
 
 app.get('/genres', function(req, res) {
-  
-  
-  // use this endpoint, which will also require your API key: https://api.themoviedb.org/3/genre/movie/list
+  console.log('GET /genres request recieved');
 
-  // send back
+  fetchGenres((body) => {
+    console.log(body)
+    res.send(body);
+  })
+  
 });
 
 app.post('/save', function(req, res) {
@@ -42,13 +42,6 @@ app.post('/save', function(req, res) {
 app.post('/delete', function(req, res) {
 
 });
-
-// //OPTION 2: Use Express Router
-// //IF you decide to go with this option delete OPTION 1 to continue
-// //Routes
-// const movieRoutes = require('./routes/movieRoutes.js');
-// //Use routes
-// app.use('/movies', movieRoutes);
 
 
 app.listen(3000, function() {
