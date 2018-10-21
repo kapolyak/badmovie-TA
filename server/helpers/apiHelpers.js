@@ -28,4 +28,22 @@ var fetchGenres = (callback) => {
 
 }
 
+var searchByGenre = (genre, callback) => {
+
+	var encodedUri = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
+	
+	let options = {
+		url: encodedUri,
+		method: 'GET'
+	};
+
+	request(options, (err, res, body) => {
+		if (err) console.log(err);
+		console.log('statusCode:', res && res.statusCode);
+		callback(body);
+	})
+
+}
+
 module.exports.fetchGenres = fetchGenres;
+module.exports.searchByGenre = searchByGenre;

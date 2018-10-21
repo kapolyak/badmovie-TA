@@ -5,18 +5,41 @@ class Search extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      genres: []
+      genres: [],
+      currentSelect: ''
     };
     this.getGenres = this.getGenres.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
+
   getGenres() {
-    axios.get('./genres', ).then((res) => {
-      console.log('response from server: ', res.data.genres);
+    axios.get('./genres').then((res) => {
       var genresArray = res.data.genres;
       this.setState({
         genres: genresArray
       })
     })
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    var genre = this.state.currentSelect;
+    console.log('search from front end for: ', genre);
+
+    this.props.getMovies(genre);
+
+  }
+
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({
+      currentSelect: e.target.value
+    })
+  }
+
+  componentDidMount() {
+    this.getGenres();
   }
 
   render() {
@@ -28,7 +51,7 @@ class Search extends React.Component {
         {/* Make the select options dynamic from genres !!! */}
         {/* How can you tell which option has been selected from here? */}
 
-        <select>
+        <select value={this.state.currentSelect} onChange={this.handleChange}>
           {this.state.genres.map((genre) => {
             return (
               <option value={genre.id.toString()}>{genre.name}</option>
@@ -36,8 +59,7 @@ class Search extends React.Component {
           })}
         </select>
         <br/><br/>
-        <button onClick={this.getGenres}>Show Genres</button>
-        <button>Search</button>
+        <button onClick={this.handleClick}>Search</button>
 
       </div>
     );

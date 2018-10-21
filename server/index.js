@@ -1,7 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var request = require('request')
-var { fetchGenres } = require('./helpers/apiHelpers.js')
+var request = require('request');
+var { fetchGenres } = require('./helpers/apiHelpers.js');
+var { searchByGenre } = require('./helpers/apiHelpers.js');
 
 var app = express();
 
@@ -13,7 +14,18 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 
 //OPTION 1: Use regular routes
-app.get('/search', function(req, res) {
+app.post('/search', function(req, res) {
+  console.log('POST /search request recieved');
+  console.log('genre query =', req.body.genre);
+  var genre = req.body.genre;
+
+  searchByGenre(genre, (body) => {
+    var result = JSON.parse(body);
+    console.log('from api:', result);
+    res.send(result);
+  })
+
+
   // get the search genre     
 
   // https://www.themoviedb.org/account/signup
@@ -23,13 +35,14 @@ app.get('/search', function(req, res) {
   // https://api.themoviedb.org/3/discover/movie
 
   // and sort them by horrible votes using the search parameters in the API
+
+
 });
 
 app.get('/genres', function(req, res) {
   console.log('GET /genres request recieved');
 
   fetchGenres((body) => {
-    console.log(body)
     res.send(body);
   })
   
