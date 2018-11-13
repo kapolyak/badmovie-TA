@@ -31,7 +31,7 @@ class Movies extends React.Component {
                   </div>
                 </section>
               </div>
-              <button onClick={(e) => (this.props.showFaves) ? this.props.deleteMovie(movie) : this.props.saveMovie(movie)}>{this.props.showFaves ? "Remove from favorites" : "Add to favorites"}</button>
+              <button onClick={(e) => this.props.showFaves ? this.props.deleteMovie(movie) : this.props.saveMovie(movie)}>{this.props.showFaves ? "Remove from favorites" : "Add to favorites"}</button>
             </li>
           )
         })}        
